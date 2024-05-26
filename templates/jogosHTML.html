@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogos HTML</title>
+</head>
+<body>
+    <input type="int" id="codigo" placeholder="Codigo" name="codigo"/>
+    <input type="text" id="data" placeholder="Data" name="data"/>
+    <button id="btnSend">Enviar</button>
+</body>
+<script>
+    function sendUser(){
+        var codigo = document.getElementById('codigo').value
+        var nome = document.getElementById('data').value
+
+        var data = {
+            codigo: codigo,
+            data: data,
+        }
+
+        const response = fetch('http://localhost:3000/jogos', {
+            method: 'POST',
+            headers:{
+                'Content-Type' : 'Application/Json'
+            },
+            body: JSON.stringify(data)
+            
+        })
+    }
+
+    document.getElementById('btnSend').addEventListener('click', () => sendUser())
+</script>
+</html>

@@ -3,27 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clientes HTML</title>
+    <title>Usuários HTML</title>
 </head>
 <body>
+    <input type="int" id="id" placeholder="ID" name="id"/>
     <input type="text" id="nome" placeholder="Nome" name="nome"/>
+    <input type="text" id="email" placeholder="Email" name="email"/>
     <input type="text" id="senha" placeholder="Senha" name="senha"/>
-    <input type="number" id="cargos_id" placeholder="cargos_id" name="cargos_id"/>
+    Cargo:   <select name = "role" id = "role">
+        <option value = "G">Gerente </option>
+        <option value = "F">Funcionário  </option>
+        <option value = "U">Usuário </option>
+        </select>
+
     <button id="btnSend">Enviar</button>
 </body>
 <script>
     function sendUser(){
+        var ID = document.getElementById('id').value
         var nome = document.getElementById('nome').value
+        var email = document.getElementById('email').value
         var senha = document.getElementById('senha').value
-        var cargos_id = document.getElementById('cargos_id').value
+        var role = document.getElementById('role').value
 
         var data = {
+            ID: ID,
             nome: nome,
+            email: email,
             senha: senha,
-            cargos_id: cargos_id
+            role: role
         }
 
-        const response = fetch('http://localhost:3000/clientes', {
+        const response = fetch('http://localhost:3000/usuarios', {
             method: 'POST',
             headers:{
                 'Content-Type' : 'Application/Json'

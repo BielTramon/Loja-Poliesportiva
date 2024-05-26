@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clientes</title>
+    <title>Jogos</title>
 </head>
 <body>
     <script>
         //jinja é o jeito q o Flask entende o JavaScript
-        var data = {{ data.clientes | tojson}}
+        var Data = {{ data.jogos | tojson}}
 
-        var paragrafos = data.map(function(cliente) {
-            return '<p>' + cliente.nome + '</p>'
+        var paragrafos = data.map(function(jogo) {
+            return '<p>' + jogos.data + '</p>',
         })
 
         document.body.innerHTML += paragrafos.join('') //pega o body do documento e adiciona no html
-        console.table(data)
+        console.table(Data)
     </script>
     
 </body>

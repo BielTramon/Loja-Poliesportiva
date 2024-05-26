@@ -1,11 +1,13 @@
-#mostra que todas as rotas tão aqui
-
-from routes.clientesRoutes import clientes
-from routes.homeRoutes import homeRoutes
-from routes.cargosRoutes import cargosRoutes
+from routes.categoriasRoutes import categorias
+from routes.marcasRoutes import marcas
+from routes.itensRoutes import itens
+from routes.jogosRoutes import jogos
+from routes.usuariosRoutes import usuarios
 
 def routeIndex(app):
-    clientes(app=app)
-    homeRoutes(app=app)
-    cargosRoutes(app=app)
+    categorias(app=app)
+    marcas(app=app)
+    itens(app=app)
+    jogos(app=app)
+    usuarios(app=app)
 

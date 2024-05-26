@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Itens HTML</title>
+</head>
+<body>
+    <input type="int" id="codigo" placeholder="Codigo" name="codigo"/>
+    <input type="text" id="nome" placeholder="Nome" name="nome"/>
+    <input type="int" id="cod_categoria" placeholder="Cod_categoria" name="cod_categoria"/>
+    <input type="int" id="cod_marca" placeholder="Cod_marca" name="cod_marca"/>
+    <input type="text" id="tamanho" placeholder="Tamanho" name="tamanho"/>
+    <input type="text" id="cor" placeholder="Cor" name="cor"/>
+    <input type="float" id="preco" placeholder="Preco" name="preco"/>
+    <button id="btnSend">Enviar</button>
+</body>
+<script>
+    function sendUser(){
+        var codigo = document.getElementById('codigo').value
+        var nome = document.getElementById('nome').value
+        var cod_categoria = document.getElementById('cod_categoria').value
+        var cod_marca = document.getElementById('cod_marca').value
+        var tamanho = document.getElementById('tamanho').value
+        var cor = document.getElementById('cor').value
+        var preco = document.getElementById('preco').value
+        var data = {
+            codigo: codigo,
+            nome: nome,
+            cod_categoria: cod_categoria,
+            cod_marca: cod_marca,
+            tamanho: tamanho,
+            cor: cor,
+            preco: preco,
+        }
+
+        const response = fetch('http://localhost:3000/itens', {
+            method: 'POST',
+            headers:{
+                'Content-Type' : 'Application/Json'
+            },
+            body: JSON.stringify(data)
+            
+        })
+    }
+
+    document.getElementById('btnSend').addEventListener('click', () => sendUser())
+</script>
+</html>
