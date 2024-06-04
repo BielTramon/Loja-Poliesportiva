@@ -11,7 +11,7 @@ def usuariosController():
     if request.method == 'POST':
         try:
             data = request.get_json()
-            user = Usuarios(data['id'],data['nome'], data['email'], data['senha'], data['role'])
+            user = Usuarios(data['nome'], data['email'], data['senha'], data['role'])
             db.session.add(user)
             db.session.commit()
             return 'Usuario criado com sucesso',200
