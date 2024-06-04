@@ -1,17 +1,14 @@
-import { createStackNavigator } from "@react-navigation/stack";
-import { NavigationContainer } from "@react-navigation/native";
+// App.js
+import React from 'react';
+import { StatusBar } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import Routes from './src/routes';
 
-import Home from "./Home";
-import Gerente from "./Gerente";
-
-export default function App(){
-  const Stack = createStackNavigator();
-  return(
-    <NavigationContainer screemOpitions={{headerShown: false}}>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home}/>
-        <Stack.Screen name="Gerente" component={Gerente}/>
-      </Stack.Navigator>
+export default function App() {
+  return (
+    <NavigationContainer>
+      <StatusBar barStyle="dark-content" />
+      <Routes />
     </NavigationContainer>
-  )
+  );
 }
