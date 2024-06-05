@@ -1,36 +1,42 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
+import React, {useState, } from 'react';
+import axios from 'axios';
 
 function SignInForm() {
   const navigation = useNavigation();
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
   
-  const handleEntrarClick = () => {
-    navigation.navigate('WelcomeUsuario');
-  };
-
+  async function addUser() {
+    try {
+      const response = await axios.post('http://localhost:3000/usuarios',{
+        nome: nome,
+        email: email,
+        senha: senha,
+        role: "Usuário",
+      });
+      console.log(response);
+      if (response.status===200) navigation.navigate('WelcomeUsuario');
+      getUsuarios();
+    } catch (error) {
+      new Error(error)
+    }
+  }
+  
   return (
     <View style={styles.container}>
       <Text style={styles.sportshub}>SPORTSHUB</Text>
       <View style={styles.formulario}>
-        <View style={styles.botoesContainer}>
-          <TouchableOpacity style={styles.botaoUser}>
-            <Text style={styles.textoUser}>Gerente</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.botaoUser}>
-            <Text style={styles.textoUser}>Funcionário</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.botaoUser}>
-            <Text style={styles.textoUser}>Usuário</Text>
-          </TouchableOpacity>
-        </View>
         <Text style={styles.formularioTitulo}>Crie uma conta</Text>
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
             placeholder="Digite seu usuário"
             keyboardType="email-address"
+            value={nome}
+            onChangeText={setNome}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -38,6 +44,8 @@ function SignInForm() {
             style={styles.input}
             placeholder="Digite seu email"
             keyboardType="email-address"
+            value={email}
+            onChangeText={setEmail}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -45,9 +53,11 @@ function SignInForm() {
             style={styles.input}
             placeholder="Digite sua senha"
             secureTextEntry={true}
+            value={senha}
+            onChangeText={setSenha}
           />
         </View>
-        <TouchableOpacity style={styles.botaoEntrar} onPress={handleEntrarClick}>
+        <TouchableOpacity style={styles.botaoEntrar} onPress={addUser}>
           <Text style={styles.textoEntrar}>Entrar</Text>
         </TouchableOpacity>
       </View>
@@ -112,7 +122,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textTransform: 'uppercase',
   },
-
   botaoUser: {
     backgroundColor: '#4F46E5',
     paddingVertical: 5,

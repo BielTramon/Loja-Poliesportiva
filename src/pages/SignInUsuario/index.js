@@ -1,15 +1,72 @@
-
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, {useState, } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
+const Role = [
+  {
+    id: 1,
+    name: 'Usuário'
+  },
+  {
+    id: 2,
+    name: 'Funcionário'
+  },
+  {
+    id: 3,
+    name: 'Gerente'
+  },
+]
 function SignInForm() {
+  const [role, setRole] = useState("Selecione sua função");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
   const navigation = useNavigation();
 
   const handleSignUpClick = () => {
     navigation.navigate('SignUpUsuario');
   };
 
+  const Select = ({options, onChangeSelect, text}) => {
+    // const [txt, setTxt] = useState(text);
+
+    const [modalVisible, setModalVisible] = useState(false)
+    function renderOption(item){
+      return (
+        <TouchableOpacity style={styles.select} onPress={()=> {
+          onChangeSelect(item.name);
+          // setTxt(item.name);
+          setModalVisible(false);
+        }}>
+          <Text style={styles.textSelect}>{item.name}</Text>
+        </TouchableOpacity>
+        
+      );
+    }
+    return <View>
+      <TouchableOpacity onPress={()=> setModalVisible(true)} style={styles.inputContainer}>
+        <Text style = {styles.input}>{role}</Text>
+      </TouchableOpacity>
+      <Modal animationType='slide' visible={modalVisible} onRequestClose={()=> setModalVisible(false)}>
+        <SafeAreaView>
+          <View style={styles.headerModal}>
+            <TouchableOpacity onPress={()=> setModalVisible(false)}>
+            </TouchableOpacity>
+            <Text style={styles.modalTitle}>{text}</Text>
+            <TouchableOpacity onPress={()=> setModalVisible(false)}>
+              <Text style={styles.modalCancel}>Cancelar</Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <FlatList
+              data={options ?? []} 
+              keyExtractor={(item) =>String(item.id)}
+              renderItem={({item})=>renderOption(item)}>  </FlatList>
+          </View>
+        </SafeAreaView>
+      </Modal>
+    </View>
+  }
   const handleEntrarClick = () => {
     navigation.navigate('WelcomeUsuario');
   };
@@ -18,23 +75,14 @@ function SignInForm() {
     <View style={styles.container}>
       <Text style={styles.sportshub}>SPORTSHUB</Text>
       <View style={styles.formulario}>
-        <View style={styles.botoesContainer}>
-          <TouchableOpacity style={styles.botaoUser}>
-            <Text style={styles.textoUser}>Gerente</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.botaoUser}>
-            <Text style={styles.textoUser}>Funcionário</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.botaoUser}>
-            <Text style={styles.textoUser}>Usuário</Text>
-          </TouchableOpacity>
-        </View>
         <Text style={styles.formularioTitulo}>Faça login</Text>
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
             placeholder="Digite seu email"
             keyboardType="email-address"
+            value={email}
+            onChangeText={setEmail}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -42,7 +90,15 @@ function SignInForm() {
             style={styles.input}
             placeholder="Digite sua senha"
             secureTextEntry={true}
+            value={senha}
+            onChangeText={setSenha}
           />
+        </View>
+        <View>
+          <Select
+            options={Role}
+            onChangeSelect={(nome)=> setRole(nome)}
+            text={role}/>
         </View>
         <TouchableOpacity style={styles.botaoEntrar} onPress={handleEntrarClick}>
           <Text style={styles.textoEntrar}>Entrar</Text>
@@ -56,7 +112,6 @@ function SignInForm() {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -141,6 +196,51 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 20,
   },
+  select: {
+    height: 50,
+    backgroundColor: '#F8F9FA',
+    paddingHorizontal: 12,
+    marginHorizontal: 20,
+    borderRadius: 8,
+    fontSize: 18,
+    borderColor: '#CCC',
+    borderWidth: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  textSelect: {
+    color: '#555',
+    fontSize: 16
+  },
+  headerModal: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 12,
+    borderBottomColor: '#ddd',
+    borderBottomWidth: 1,
+    paddingBottom: 12,
+    marginTop: 10,
+  },
+  modalTitle: {
+    fontSize: 18,
+    color: '#555',
+  },
+  modalCancel: {
+    fontSize: 14,
+    color: 'blue',
+    fontWeight: '600'
+  },
+  boxSelect: {
+    marginBottom: 15,
+    borderWidth: 1,
+    borderColor: '#e5e7eb',
+    backgroundColor: '#fff',
+    padding: 15,
+    fontSize: 16,
+    borderRadius: 10,
+  }
 });
 
 export default SignInForm;
