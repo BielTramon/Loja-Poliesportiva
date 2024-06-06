@@ -1,25 +1,74 @@
-// WelcomeUsuario.js
 import React from 'react';
-import { View, Text, StyleSheet, StatusBar, Image, TouchableOpacity, Animated } from 'react-native';
+import { View, Text, StyleSheet, StatusBar, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 function WelcomeUsuario() {
+    const navigation = useNavigation();
+
+    const handleCarrinhoPress = () => {
+        navigation.navigate('CarrinhoUsuario');
+    };
+
+    const handleEngrenagemPress = () => {
+        navigation.navigate('EngrenagemUsuario');
+    };
+
+    const handleProductPress = (screen) => {
+        navigation.navigate(screen);
+    };
+
     return (
         <View style={styles.container}>
             <StatusBar barStyle="dark-content" backgroundColor="#fff" />
             <View style={styles.topBar}>
-                <Image source={require('../../assets/carrinho.png')} style={styles.carrinhoImage} />
+                <View style={styles.leftIcons}>
+                    <TouchableOpacity onPress={handleCarrinhoPress}>
+                        <Image source={require('../../assets/carrinho.png')} style={styles.carrinhoImage} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleEngrenagemPress}>
+                        <Image source={require('../../assets/engrenagem.png')} style={styles.engrenagemImage} />
+                    </TouchableOpacity>
+                </View>
                 <Text style={styles.sportshub}>SPORTSHUB</Text>
             </View>
 
             {/* Conteúdo Principal */}
-            <View style={styles.content}>
-                <Text style={styles.welcomeText}>Bem-vindo à nossa aplicação!</Text>
-            </View>
-
-            {/* Barra Inferior */}
-            <View style={styles.bottomBar}>
-                <Text style={styles.bottomBarText}>Barra Inferior</Text>
-            </View>
+            <ScrollView contentContainerStyle={styles.content}>
+                <Text style={styles.welcomeText}>Produtos</Text>
+                
+                <View style={styles.productsContainer}>
+                    <View style={styles.productRow}>
+                        <TouchableOpacity style={styles.productBox} onPress={() => handleProductPress('CamisetaUsuario')}>
+                            <Image source={require('../../assets/camiseta.png')} style={styles.productImage} />
+                            <Text style={styles.productText}>Camisetas</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.productBox} onPress={() => handleProductPress('ShortsUsuario')}>
+                            <Image source={require('../../assets/shorts.png')} style={styles.productImage} />
+                            <Text style={styles.productText}>Shorts</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.productRow}>
+                        <TouchableOpacity style={styles.productBox} onPress={() => handleProductPress('MeiasUsuario')}>
+                            <Image source={require('../../assets/meia.png')} style={styles.productImage} />
+                            <Text style={styles.productText}>Meias</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.productBox} onPress={() => handleProductPress('ChuteirasUsuario')}>
+                            <Image source={require('../../assets/chuteira.png')} style={styles.productImage} />
+                            <Text style={styles.productText}>Chuteiras</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.productRow}>
+                        <TouchableOpacity style={styles.productBox} onPress={() => handleProductPress('JaquetasUsuario')}>
+                            <Image source={require('../../assets/jaqueta.png')} style={styles.productImage} />
+                            <Text style={styles.productText}>Jaquetas</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.productBox} onPress={() => handleProductPress('CalçasUsuario')}>
+                            <Image source={require('../../assets/calça.png')} style={styles.productImage} />
+                            <Text style={styles.productText}>Calças</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </ScrollView>
         </View>
     );
 };
@@ -44,31 +93,59 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: 20,
     },
+    leftIcons: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
     carrinhoImage: {
+        width: 30,
+        height: 30,
+        marginRight: 10,
+    },
+    engrenagemImage: {
         width: 30,
         height: 30,
     },
     content: {
-        flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#ECECEC',
+        paddingBottom: 20,
     },
     welcomeText: {
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 20,
+        marginTop: 20,
     },
-    bottomBar: {
-        backgroundColor: '#38a69d',
-        height: 50,
+    productsContainer: {
+        backgroundColor: '#fff',
+        padding: 10,
+        borderRadius: 10,
+        width: '90%',
+    },
+    productRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 10,
+    },
+    productBox: {
+        backgroundColor: '#ECECEC',
+        flex: 1,
+        height: 150,
         justifyContent: 'center',
         alignItems: 'center',
+        margin: 5,
+        borderRadius: 10,
     },
-    bottomBarText: {
-        color: '#fff',
-        fontSize: 18,
+    productImage: {
+        width: 120,
+        height: 120,
+        marginBottom: 5,
+    },
+    productText: {
+        fontSize: 16,
         fontWeight: 'bold',
+        color: '#4C00B7',
     },
 });
 
