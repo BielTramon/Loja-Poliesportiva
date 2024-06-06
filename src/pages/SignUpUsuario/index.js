@@ -1,6 +1,6 @@
 import { View, Text, TextInput, TouchableOpacity, StyleSheet} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import React, {useState, } from 'react';
+import React, {useState,useEffect } from 'react';
 import axios from 'axios';
 
 function SignInForm() {
@@ -8,62 +8,62 @@ function SignInForm() {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  
+
   async function addUser() {
+    console.log(nome)
     try {
       const response = await axios.post('http://localhost:3000/usuarios',{
         nome: nome,
         email: email,
         senha: senha,
-        role: "Usuário",
+        role: 'Usuário',
       });
       console.log(response);
-      if (response.status===200) navigation.navigate('WelcomeUsuario');
-      getUsuarios();
+      if (response.status===200) alert("usuários cadastrado com sucesso!");
     } catch (error) {
       new Error(error)
     }
   }
-  
-  return (
-    <View style={styles.container}>
-      <Text style={styles.sportshub}>SPORTSHUB</Text>
-      <View style={styles.formulario}>
-        <Text style={styles.formularioTitulo}>Crie uma conta</Text>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Digite seu usuário"
-            keyboardType="email-address"
-            value={nome}
-            onChangeText={setNome}
-          />
+    //navigation.navigate('WelcomeUsuario')
+    return (
+      <View style={styles.container}>
+        <Text style={styles.sportshub}>SPORTSHUB</Text>
+        <View style={styles.formulario}>
+          <Text style={styles.formularioTitulo}>Crie uma conta</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="Digite seu usuário"
+              keyboardType="email-address"
+              value={nome}
+              onChangeText={setNome}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="Digite seu email"
+              keyboardType="email-address"
+              value={email}
+              onChangeText={setEmail}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="Digite sua senha"
+              secureTextEntry={true}
+              value={senha}
+              onChangeText={setSenha}
+            />
+          </View>
+          <TouchableOpacity style={styles.botaoEntrar} onPress={addUser}>
+            <Text style={styles.textoEntrar}>Entrar</Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Digite seu email"
-            keyboardType="email-address"
-            value={email}
-            onChangeText={setEmail}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Digite sua senha"
-            secureTextEntry={true}
-            value={senha}
-            onChangeText={setSenha}
-          />
-        </View>
-        <TouchableOpacity style={styles.botaoEntrar} onPress={addUser}>
-          <Text style={styles.textoEntrar}>Entrar</Text>
-        </TouchableOpacity>
       </View>
-    </View>
-  );
-}
+    );
+  }
 
 const styles = StyleSheet.create({
   container: {
