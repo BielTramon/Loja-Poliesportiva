@@ -21,6 +21,8 @@ def marcasController():
         try:
             data = Marca.query.all()
             print([marca.to_dict() for marca in data ])
+            teste = {'marcas':[marca.to_dict() for marca in data ]}
+            return teste, 200
             return render_template('marcas.html', data = {'marcas':[marca.to_dict() for marca in data ]})
         except Exception as e:
             return 'A marca nao foi encontrada. Erro: {}'.format(str(e)),405

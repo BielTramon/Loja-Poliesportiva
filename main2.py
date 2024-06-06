@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request
 from database.db import db
 from routes.routeIndex import routeIndex
+from flask_cors import CORS
 
 class Myserver():
     def __init__(self):
         self.app = Flask(__name__)
+        CORS(self.app)
         self.app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:''@localhost/lojapoliesportiva'
         db.init_app(self.app)
         routeIndex(self.app)

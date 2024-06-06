@@ -21,6 +21,8 @@ def categoriasController():
         try:
             data = Categoria.query.all()
             print([categoria.to_dict() for categoria in data ])
+            teste = {'categorias':[categoria.to_dict() for categoria in data ]}
+            return teste, 200
             return render_template('categorias.html', data = {'categorias':[categoria.to_dict() for categoria in data ]})
         except Exception as e:
             return 'A categoria nao foi encontrada. Erro: {}'.format(str(e)),405

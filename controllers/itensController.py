@@ -21,6 +21,8 @@ def itensController():
         try:
             data = Itens.query.all()
             print([item.to_dict() for item in data ])
+            teste = {'itens':[item.to_dict() for item in data ]}
+            teste, 200
             return render_template('itens.html', data = {'itens':[item.to_dict() for item in data ]})
         except Exception as e:
             return 'O item nao foi encontrado. Erro: {}'.format(str(e)),405

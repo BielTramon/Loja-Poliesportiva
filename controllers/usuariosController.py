@@ -11,7 +11,9 @@ def usuariosController():
     if request.method == 'POST':
         try:
             data = request.get_json()
+            print(data)
             user = Usuarios(data['nome'], data['email'], data['senha'], data['role'])
+            print(user.to_dict())
             db.session.add(user)
             db.session.commit()
             return 'Usuario criado com sucesso',200
@@ -21,6 +23,8 @@ def usuariosController():
         try:
             data = Usuarios.query.all()
             print([usuario.to_dict() for usuario in data ])
+            teste = {'usuarios':[usuario.to_dict() for usuario in data ]}
+            return teste, 200
             return render_template('usuarios.html', data = {'usuarios':[usuario.to_dict() for usuario in data ]})
         except Exception as e:
             return 'O usuario nao foi encontrado. Erro: {}'.format(str(e)),405
