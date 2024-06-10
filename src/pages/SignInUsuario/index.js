@@ -1,7 +1,8 @@
-import React, {useState, } from 'react';
+import React, {useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import axios from 'axios';
 
 const Role = [
   {
@@ -18,6 +19,8 @@ const Role = [
   },
 ]
 function SignInForm() {
+  const [usuarios, setUsuarios] = useState([])
+  const [loading, setLoading] = useState(true) //tela de download
   const [role, setRole] = useState("Selecione sua função");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -26,6 +29,39 @@ function SignInForm() {
   const handleSignUpClick = () => {
     navigation.navigate('SignUpUsuario');
   };
+
+  async function getClientes() {
+    try {
+      setTimeout(async () => { //caso queira tirar o setTimeout, é só botar o async antes do function e tirar o setTimeout
+        const response = await axios.get("http://localhost:3000/usuarios"); //da um fetch nesse localhost
+        console.log(usuarios)
+        setUsuarios(response.data.usuarios); //pega os dados do response e armazena em clientes
+        setLoading(false);
+        usuarios.map((usuario) => {
+        console.log(email)
+        console.log(usuario.email);
+        if (email == usuario.email) {
+          if(senha == usuario.senha) {
+            navigation.navigate('WelcomeUsuario');
+          }
+        } else {
+          alert("Credenciais erradas, por favor tente novamente.")
+        }
+        // if (email == (usuario.email)) and (senha == usuario.senha); {
+        //   navigation.navigate('WelcomeUsuario');
+        // }
+      })
+    }, 1000);
+    }
+    catch (error) {
+    new Error(error);
+    }
+  }
+
+  useEffect(() => {
+    getClientes();
+  }, []);
+
 
   const Select = ({options, onChangeSelect, text}) => {
     // const [txt, setTxt] = useState(text);
@@ -100,7 +136,7 @@ function SignInForm() {
             onChangeSelect={(nome)=> setRole(nome)}
             text={role}/>
         </View>
-        <TouchableOpacity style={styles.botaoEntrar} onPress={handleEntrarClick}>
+        <TouchableOpacity style={styles.botaoEntrar} onPress={getClientes}>
           <Text style={styles.textoEntrar}>Entrar</Text>
         </TouchableOpacity>
         <View style={styles.linkBotao}>
