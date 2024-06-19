@@ -34,15 +34,6 @@ function SignInForm() {
   const handleSignUpClick = () => {
     navigation.navigate('SignUpUsuario');
   };
-  const Usuario = () => {
-    navigation.navigate('WelcomeUsuario');
-  };
-  const Funcionario = () => {
-    navigation.navigate('FuncionarioMain');
-  };
-  // const Gerente = () => {
-  //   navigation.navigate('SignUpUsuario');
-  // };
 
   async function getClientes() {
     try {
@@ -54,27 +45,22 @@ function SignInForm() {
         usuarios.map((usuario) => {
         console.log(email)
         console.log(usuario.email);
-        // if (email === usuario.email && usuario.senha === senha) {
-        //   //if(senha == usuario.senha) {
-        //   if(role == "Usuário") {
-        //     navigation.navigate('WelcomeUsuario');
-        //   }
-        //   else if (role == "Funcionário"){
-        //     // navigation.navigate('FuncionarioMain')
-        //     navigation.navigate('WelcomeFuncionario')
-        //   }
-        //   else if (role == "Gerente") {
+        if (email === usuario.email && usuario.senha === senha) {
+          //if(senha == usuario.senha) {
+          if(role == "Usuário") {
+            navigation.navigate('WelcomeUsuario');
+          }
+          else if (role == "Funcionário"){
+            // navigation.navigate('FuncionarioMain')
+            navigation.navigate('WelcomeFuncionario')
+          }
+          else if (role == "Gerente") {
             navigation.navigate('WelcomeGerente');
-        //   }
-        // }  
-        // else {
-        //   alert("Credenciais erradas, por favor tente novamente.")
-        // }
-        //} 
-      
-        // if (email == (usuario.email)) and (senha == usuario.senha); {
-        //   navigation.navigate('WelcomeUsuario');
-        // }
+          }
+        }  
+        else {
+          alert("Credenciais erradas, por favor tente novamente.")
+        }
       })
     }, 1000);
     }
