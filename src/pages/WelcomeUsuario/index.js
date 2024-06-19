@@ -1,6 +1,7 @@
-import React from 'react';
-import { View, Text, StyleSheet, StatusBar, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TextInput,StatusBar, TouchableOpacity, StyleSheet,ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import React, {useState,useEffect } from 'react';
+import axios from 'axios';
 
 function WelcomeUsuario() {
     const navigation = useNavigation();
@@ -23,10 +24,10 @@ function WelcomeUsuario() {
             <View style={styles.topBar}>
                 <View style={styles.leftIcons}>
                     <TouchableOpacity onPress={handleCarrinhoPress}>
-                        <Image source={require('../../assets/carrinho.png')} style={styles.carrinhoImage} />
+                        {/* <Image source={require('../../assets/carrinho.png')} style={styles.carrinhoImage} /> */}
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handleEngrenagemPress}>
-                        <Image source={require('../../assets/engrenagem.png')} style={styles.engrenagemImage} />
+                        {/* <Image source={require('../../assets/engrenagem.png')} style={styles.engrenagemImage} /> */}
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.sportshub}>SPORTSHUB</Text>
@@ -39,31 +40,31 @@ function WelcomeUsuario() {
                 <View style={styles.productsContainer}>
                     <View style={styles.productRow}>
                         <TouchableOpacity style={styles.productBox} onPress={() => handleProductPress('CamisetaUsuario')}>
-                            <Image source={require('../../assets/camiseta.png')} style={styles.productImage} />
+                            {/* <Image source={require('../../assets/camiseta.png')} style={styles.productImage} /> */}
                             <Text style={styles.productText}>Camisetas</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.productBox} onPress={() => handleProductPress('ShortsUsuario')}>
-                            <Image source={require('../../assets/shorts.png')} style={styles.productImage} />
+                            {/* <Image source={require('../../assets/shorts.png')} style={styles.productImage} /> */}
                             <Text style={styles.productText}>Shorts</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.productRow}>
                         <TouchableOpacity style={styles.productBox} onPress={() => handleProductPress('MeiasUsuario')}>
-                            <Image source={require('../../assets/meia.png')} style={styles.productImage} />
+                            {/* <Image source={require('../../assets/meia.png')} style={styles.productImage} /> */}
                             <Text style={styles.productText}>Meias</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.productBox} onPress={() => handleProductPress('ChuteirasUsuario')}>
-                            <Image source={require('../../assets/chuteira.png')} style={styles.productImage} />
+                            {/* <Image source={require('../../assets/chuteira.png')} style={styles.productImage} /> */}
                             <Text style={styles.productText}>Chuteiras</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.productRow}>
                         <TouchableOpacity style={styles.productBox} onPress={() => handleProductPress('JaquetasUsuario')}>
-                            <Image source={require('../../assets/jaqueta.png')} style={styles.productImage} />
+                            {/* <Image source={require('../../assets/jaqueta.png')} style={styles.productImage} /> */}
                             <Text style={styles.productText}>Jaquetas</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.productBox} onPress={() => handleProductPress('CalçasUsuario')}>
-                            <Image source={require('../../assets/calça.png')} style={styles.productImage} />
+                            {/* <Image source={require('../../assets/calça.png')} style={styles.productImage} /> */}
                             <Text style={styles.productText}>Calças</Text>
                         </TouchableOpacity>
                     </View>

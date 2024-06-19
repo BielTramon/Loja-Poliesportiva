@@ -2,6 +2,7 @@ import React, {useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useFonts } from 'expo-font';
 import axios from 'axios';
 
 const Role = [
@@ -26,9 +27,22 @@ function SignInForm() {
   const [senha, setSenha] = useState("");
   const navigation = useNavigation();
 
+  const FuncionarioEnter = () => {
+    navigation.navigate('FuncionarioMain');
+  };
+
   const handleSignUpClick = () => {
     navigation.navigate('SignUpUsuario');
   };
+  const Usuario = () => {
+    navigation.navigate('WelcomeUsuario');
+  };
+  const Funcionario = () => {
+    navigation.navigate('FuncionarioMain');
+  };
+  // const Gerente = () => {
+  //   navigation.navigate('SignUpUsuario');
+  // };
 
   async function getClientes() {
     try {
@@ -40,13 +54,24 @@ function SignInForm() {
         usuarios.map((usuario) => {
         console.log(email)
         console.log(usuario.email);
-        if (email == usuario.email) {
-          if(senha == usuario.senha) {
-            navigation.navigate('WelcomeUsuario');
-          }
-        } else {
-          alert("Credenciais erradas, por favor tente novamente.")
-        }
+        // if (email === usuario.email && usuario.senha === senha) {
+        //   //if(senha == usuario.senha) {
+        //   if(role == "Usuário") {
+        //     navigation.navigate('WelcomeUsuario');
+        //   }
+        //   else if (role == "Funcionário"){
+        //     // navigation.navigate('FuncionarioMain')
+        //     navigation.navigate('WelcomeFuncionario')
+        //   }
+        //   else if (role == "Gerente") {
+            navigation.navigate('WelcomeGerente');
+        //   }
+        // }  
+        // else {
+        //   alert("Credenciais erradas, por favor tente novamente.")
+        // }
+        //} 
+      
         // if (email == (usuario.email)) and (senha == usuario.senha); {
         //   navigation.navigate('WelcomeUsuario');
         // }
@@ -156,7 +181,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
   },
   sportshub: {
-    fontFamily: 'Karantina',
+    fontFamily: 'arial',
     color: '#4C00B7',
     fontSize: 50,
     padding: 20,

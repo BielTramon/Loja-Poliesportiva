@@ -1,43 +1,73 @@
-import React from 'react';
-import { View, Text, StyleSheet, StatusBar, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TextInput,StatusBar, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import React, {useState,useEffect } from 'react';
+import axios from 'axios';
 
 function CalçasUsuario() {
-    const navigation = useNavigation();
+    const [loading, setLoading] = useState(true) //tela de download
+    const [itens, setItens] = useState("")
+    const codcategoria = 6;
 
-    const handleCarrinhoPress = () => {
-        navigation.navigate('CarrinhoUsuario');
-    };
 
-    const handleEngrenagemPress = () => {
-        navigation.navigate('EngrenagemUsuario');
-    };
+  async function ItemDelete(codigo) {
+      try {
+        const response = await axios.delete(`http://localhost:3000/itens?codigo=${codigo}`);
+        console.log(response);
+        if (response.status === 200) alert("Item deletado com sucesso!");
+        getItem();
+      } catch (error) {
+        new Error(error);
+      }
+  }
+  async function getItem() {
+    try {
+      setTimeout(async () => { //caso queira tirar o setTimeout, é só botar o async antes do function e tirar o setTimeout
+        const response = await axios.get(`http://localhost:3000/itens?codcategoria=${codcategoria}`);; //da um fetch nesse localhost
+        setItens(response.data.itens); //pega os dados do response e armazena em clientes
+        setLoading(false);
+      }, 1000);
+    } catch (error) {
+      new Error(error);
+    }
+  }
 
-    return (
-        <View style={styles.container}>
-            <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-            <View style={styles.topBar}>
-                <View style={styles.leftItens}>
-                    <TouchableOpacity onPress={handleCarrinhoPress}>
-                        <Image source={require('../../assets/carrinho.png')} style={styles.carrinhoImage} />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={handleEngrenagemPress}>
-                        <Image source={require('../../assets/engrenagem.png')} style={styles.engrenagemImage} />
-                    </TouchableOpacity>
-                </View>
-                <Text style={styles.sportshub}>SPORTSHUB</Text>
+  useEffect(() => {
+    getItem();
+  }, []);
+
+  return ( 
+      <View>
+      <Text>Itens Disponíveis</Text>
+      {loading && itens.length === 0 ? (
+        <h3>Carregando...</h3>
+      ) : (
+          itens.map((item) => {
+          return (
+            <View
+              key={item.nome}
+              style={{
+                display:"flex",
+                alignItens: "center",
+                border: "1px solid red",
+                gap: 10,
+                flexDirection: "column",
+              }}
+            >
+                <Text>Código: {item.codigo}</Text> 
+                <Text>Nome: {item.nome}</Text>
+                <Text>Código da Categoria: {item.codcategoria}</Text>
+                <Text>Código da marca: {item.codmarca}</Text>
+                <Text>Cor: {item.cor}</Text>
+                <Text>Preco: {item.preco}</Text>
+                <TouchableOpacity onPress={() => ItemDelete(item.codigo)}>
+                  <Text>Deletar Item</Text>
+                </TouchableOpacity>
             </View>
-
-            <ScrollView contentContainerStyle={styles.content}>
-                <Text style={styles.welcomeText}>Calças</Text>
-                
-                <View style={styles.detalheprodutocontainer}>
-                    <Image source={require('../../assets/calça.png')} style={styles.produtoImage} />
-                    <Text style={styles.detalheprodutoText}>Detalhes sobre as calças...</Text>
-                </View>
-            </ScrollView>
-        </View>
-    );
+          );
+        })
+      )}
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

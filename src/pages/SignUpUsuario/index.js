@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
   },
   sportshub: {
-    fontFamily: 'Karantina',
+    fontFamily: 'arial',
     color: '#4C00B7',
     fontSize: 50,
     padding: 20,

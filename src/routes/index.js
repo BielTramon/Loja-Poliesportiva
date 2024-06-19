@@ -11,6 +11,13 @@ import MeiasUsuario from '../pages/MeiasUsuario';
 import ChuteirasUsuario from '../pages/ChuteirasUsuario';
 import JaquetasUsuario from '../pages/JaquetasUsuario';
 import CalçasUsuario from '../pages/CalçasUsuario';
+import CategoryRegistration from '../pages/WelcomeFuncionario/CategoryRegistration';
+import BrandRegistration from '../pages/WelcomeFuncionario/BrandRegistration';
+import Item from '../pages/WelcomeFuncionario/ItensManangement';
+import WelcomeFuncionario from '../pages/WelcomeFuncionario';
+import WelcomeGerente from '../pages/WelcomeGerente';
+import Funcionarios from '../pages/WelcomeGerente/FuncionarioManangement';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -70,6 +77,36 @@ export default function Routes() {
             <Stack.Screen
                 name="CalçasUsuario"
                 component={CalçasUsuario}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="CategoryRegistration"
+                component={CategoryRegistration}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="BrandRegistration"
+                component={BrandRegistration}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="ItensManangement"
+                component={Item}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="WelcomeFuncionario"
+                component={WelcomeFuncionario}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="WelcomeGerente"
+                component={WelcomeGerente}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="FuncionarioManangement"
+                component={Funcionarios}
                 options={{ headerShown: false }}
             />
         </Stack.Navigator>
