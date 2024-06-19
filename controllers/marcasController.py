@@ -11,7 +11,7 @@ def marcasController():
     if request.method == 'POST':
         try:
             data = request.get_json()
-            user = Marca(data['codigo'],data['nome'])
+            user = Marca(data['nome'])
             db.session.add(user)
             db.session.commit()
             return 'Marca criada com sucesso',200

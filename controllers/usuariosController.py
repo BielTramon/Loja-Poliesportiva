@@ -21,13 +21,20 @@ def usuariosController():
             return 'O usuario nao foi criado. Erro: {}'.format(str(e)),405
     elif request.method == 'GET': 
         try:
-            data = Usuarios.query.all()
-            print([usuario.to_dict() for usuario in data ])
-            teste = {'usuarios':[usuario.to_dict() for usuario in data ]}
-            return teste, 200
-            return render_template('usuarios.html', data = {'usuarios':[usuario.to_dict() for usuario in data ]})
+            role = request.args.get('role')
+            if role:
+                data = Usuarios.query.filter(Usuarios.role == role).all()
+                usuarios = [usuario.to_dict() for usuario in data ]
+                return usuarios, 200
+            else:
+            
+                data = Usuarios.query.all()
+                print([role.to_dict() for role in data ])
+                teste = {'usuarios':[role.to_dict() for role in data ]}
+                return teste, 200
+                return render_template('usuarios.html', data = {'usuarios':[usuario.to_dict() for usuario in data ]})
         except Exception as e:
-            return 'O usuario nao foi encontrado. Erro: {}'.format(str(e)),405
+                return 'O usuario nao foi encontrado. Erro: {}'.format(str(e)),405
     elif request.method == "PUT":
         try:
             data = request.get_json()
@@ -44,6 +51,17 @@ def usuariosController():
             return 'Não foi possivel atualizar o usuário {}'.format(str(e))
     elif request.method == "DELETE":
         try:
+            role = request.args.to_dict().get('role')
+            if role:
+                data = Usuarios.query.filter(Usuarios.role == "Funcionário").all()
+                
+                if data is None:
+                    return{'error': 'Funcionário não encontrado.'}, 405
+                
+                db.session.delete(data)
+                db.session.commit()
+                return "Funcionário deletado com sucesso.", 202
+            
             data = request.get_json()
             delete_usuario_id = data["id"]
             usuario = Usuarios.query.get(delete_usuario_id)

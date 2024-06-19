@@ -11,7 +11,7 @@ def categoriasController():
     if request.method == 'POST':
         try:
             data = request.get_json()
-            user = Categoria(data['codigo'],data['nome'])
+            user = Categoria(data['nome'])
             db.session.add(user)
             db.session.commit()
             return 'Categoria criada com sucesso',200
@@ -41,13 +41,16 @@ def categoriasController():
             return 'Não foi possivel atualizar a categoria {}'.format(str(e))
     elif request.method == "DELETE":
         try:
-            data = request.get_json()
-            delete_categoria_codigo = data["codigo"]
-            categoria = Categoria.query.get(delete_categoria_codigo)
+            data = request.args.to_dict().get('codigo')#pega todos os dados do Bruno
+            print(data)
+            categoria = Categoria.query.get(data) # vai procurar usuarios NO BANCO com esse id
+
             if categoria is None:
-                return {'error':'Categoria nao encontrada'}, 404
+                return{'error': 'Item não encontrado.'}, 405
+            
             db.session.delete(categoria)
             db.session.commit()
-            return 'Categoria deletada com sucesso',202
+            return "Categoria deletada com sucesso.", 202
+
         except Exception as e:
-            return 'Não foi possivel deletar a categoria'
+            return 'Não foi possivel deletar a categoria.'

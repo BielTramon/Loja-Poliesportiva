@@ -2,4 +2,4 @@ from controllers.categoriasController import categoriasController, categoriasHtm
 
 def categorias(app):
     app.route('/categoriasHTML', methods = ['GET'])(categoriasHtmlController)
-    app.route('/categorias', methods = ['GET', 'POST', 'PUT', 'DELETE'])(categoriasController)
+    app.route('/categoria', methods = ['GET', 'POST', 'PUT', 'DELETE'])(categoriasController)

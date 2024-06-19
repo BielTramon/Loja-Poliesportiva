@@ -7,9 +7,8 @@ class Categoria(db.Model):
             'nome': self.nome
         }
     
-    codigo = db.Column(db.Integer, primary_key = True, unique= True, nullable = False) 
+    codigo = db.Column(db.Integer, primary_key = True)
     nome = db.Column(db.String(100), nullable = False)
 
-    def __init__(self,codigo, nome):
-        self.codigo = codigo
+    def __init__(self, nome):
         self.nome = nome
