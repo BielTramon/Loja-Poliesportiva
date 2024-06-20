@@ -2,6 +2,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import { useNavigation } from '@react-navigation/native';
 import React, {useState,useEffect } from 'react';
 import axios from 'axios';
+import { setStatusBarBackgroundColor } from 'expo-status-bar';
 
 function Item() {
     const [loading, setLoading] = useState(true) //tela de download
@@ -58,8 +59,8 @@ function Item() {
                 <Text>Código da marca: {item.codmarca}</Text>
                 <Text>Cor: {item.cor}</Text>
                 <Text>Preco: {item.preco}</Text>
-                <TouchableOpacity onPress={() => ItemDelete(item.codigo)}>
-                  <Text>Deletar Item</Text>
+                <TouchableOpacity style={styles.deleteButtom} onPress={() => ItemDelete(item.codigo)}>
+                  <Text style={styles.txtDelete}>Deletar Item</Text>
                 </TouchableOpacity>
             </View>
           );
@@ -69,4 +70,13 @@ function Item() {
   );
 }
 
+const styles = StyleSheet.create({
+  deleteButtom: {
+    backgroundColor: 'red',
+  },
+  txtDelete: {
+    color: '#fff',
+
+  }
+});
 export default Item

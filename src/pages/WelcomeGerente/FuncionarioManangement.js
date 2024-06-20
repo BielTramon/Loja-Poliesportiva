@@ -23,7 +23,7 @@ function Funcionarios() {
     try {
       setTimeout(async () => { //caso queira tirar o setTimeout, é só botar o async antes do function e tirar o setTimeout
         const response = await axios.get(`http://localhost:3000/usuarios?role=${role}`); //da um fetch nesse localhost
-        setRoles(response.data.roles); //pega os dados do response e armazena em clientes
+        setRoles(response.data.usuarios); //pega os dados do response e armazena em clientes
         console.log(roles);
         setLoading(false);
       }, 1000);
@@ -58,8 +58,8 @@ function Funcionarios() {
                 <Text>Nome: {usuario.nome}</Text>
                 <Text>Email: {usuario.email}</Text>
                 <Text>Senha: {usuario.senha}</Text>
-                <TouchableOpacity onPress={() => FuncionarioDelete(usuario.codigo)}>
-                  <Text>Deletar Funcionário</Text>
+                <TouchableOpacity style={styles.deleteButtom} onPress={() => FuncionarioDelete(usuario.codigo)}>
+                  <Text style={styles.txtDelete}>Deletar Funcionário</Text>
                 </TouchableOpacity>
             </View>
           );
@@ -68,5 +68,15 @@ function Funcionarios() {
     </View>
   );
 }
+
+
+const styles = StyleSheet.create({
+  deleteButtom: {
+    backgroundColor: 'red',
+  },
+  txtDelete: {
+    color: '#fff',
+  }
+});
 
 export default Funcionarios
