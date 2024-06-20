@@ -24,7 +24,7 @@ def usuariosController():
             role = request.args.get('role')
             if role:
                 data = Usuarios.query.filter(Usuarios.role == role).all()
-                usuarios = [usuario.to_dict() for usuario in data ]
+                usuarios = {'usuarios':[usuario.to_dict() for usuario in data ]}
                 return usuarios, 200
             else:
             
@@ -51,24 +51,17 @@ def usuariosController():
             return 'Não foi possivel atualizar o usuário {}'.format(str(e))
     elif request.method == "DELETE":
         try:
-            role = request.args.to_dict().get('role')
-            if role:
-                data = Usuarios.query.filter(Usuarios.role == "Funcionário").all()
-                
-                if data is None:
-                    return{'error': 'Funcionário não encontrado.'}, 405
-                
-                db.session.delete(data)
-                db.session.commit()
-                return "Funcionário deletado com sucesso.", 202
+            codigo = request.args.to_dict().get('codigo')
             
-            data = request.get_json()
-            delete_usuario_id = data["id"]
-            usuario = Usuarios.query.get(delete_usuario_id)
-            if usuario is None:
-                return {'error':'Usuário nao encontrado'}, 404
+            data = Usuarios.query.filter(Usuarios.codigo == codigo).all()
+            
+            if not data:
+                return{'error': 'Funcionário não encontrado.'}, 405
+            
+            usuario = data[0]
+            
             db.session.delete(usuario)
             db.session.commit()
             return 'Usuário deletado com sucesso',202
         except Exception as e:
-            return 'Não foi possivel deletar o ususario'
+            return f'Não foi possivel deletar o ususario. Erro: {str(e)}', 500
